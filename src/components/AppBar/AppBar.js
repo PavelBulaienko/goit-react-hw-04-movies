@@ -3,17 +3,17 @@ import { NavLink } from 'react-router-dom'
 import routes from '../../routes'
 
 class AppBar extends Component {
-  state = {}
   render() {
+    const { home, moviesPage } = routes
     return (
       <ul className="navList">
         <li className="navListItem">
-          <NavLink to={routes.home} className="navLink">
+          <NavLink to={home} className="navLink">
             Home
           </NavLink>
         </li>
         <li className="navListItem">
-          <NavLink to={routes.moviesPage} className="navLink">
+          <NavLink to={moviesPage} className="navLink">
             Search
           </NavLink>
         </li>

@@ -1,6 +1,8 @@
 import { Component } from 'react'
 import { Route, NavLink } from 'react-router-dom'
 import moviesDetailPageAPI from '../../services/moviesDetailPageAPI'
+import Cast from '../Cast'
+import Reviews from '../Reviews'
 
 class MovieDetailsPage extends Component {
   state = {
@@ -78,32 +80,12 @@ class MovieDetailsPage extends Component {
         </ul>
         <Route
           path={`${this.props.match.url}/cast`}
-          render={() => (
-            <ul>
-              {this.state.cast.map((actor) => (
-                <li key={actor.id}>
-                  <img
-                    src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
-                    alt={actor.name}
-                  />
-                  <p>Name: {actor.name}</p>
-                  <p>Character: {actor.character}</p>
-                </li>
-              ))}
-            </ul>
-          )}
+          render={(props) => <Cast {...props} cast={this.state.cast} />}
         />
         <Route
           path={`${this.props.match.url}/reviews`}
-          render={() => (
-            <ul>
-              {this.state.reviews.results.map((review) => (
-                <li key={review.id}>
-                  <h4>Name: {review.author}</h4>
-                  <p>Review: {review.content}</p>
-                </li>
-              ))}
-            </ul>
+          render={(props) => (
+            <Reviews {...props} reviews={this.state.reviews} />
           )}
         />
       </>
