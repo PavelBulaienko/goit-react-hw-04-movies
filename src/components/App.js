@@ -1,15 +1,12 @@
 import '../styles/App.css'
 import { Component } from 'react'
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  NavLink,
-} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import HomePage from './views/HomePage'
 import fetchOnAPI from '../services/moviesApi'
 import MoviesPage from './views/MoviesPage'
 import MovieDetailsPage from './views/MovieDetailsPage'
+import routes from '../routes'
+import AppBar from './AppBar/AppBar'
 
 class App extends Component {
   state = {}
@@ -18,28 +15,21 @@ class App extends Component {
       <>
         <div className="mainWrapper">
           <Router>
-            <ul className="navList">
-              <li className="navListItem">
-                <NavLink to="/" className="navLink">
-                  Home
-                </NavLink>
-              </li>
-              <li className="navListItem">
-                <NavLink to="/movies" className="navLink">
-                  Search
-                </NavLink>
-              </li>
-            </ul>
+            <AppBar />
             <Switch>
               <Route
                 exact
-                path="/"
-                render={(props) => (
-                  <HomePage {...props} fetchOnAPI={fetchOnAPI} />
-                )}
+                path={routes.home}
+                // render={(props) => (
+                //   <HomePage {...props} fetchOnAPI={fetchOnAPI} />
+                // )}
+                component={HomePage}
               />
-              <Route path="/movies/:movieId" component={MovieDetailsPage} />
-              <Route path="/movies" component={MoviesPage} />
+              <Route
+                path={routes.movieDetailPage}
+                component={MovieDetailsPage}
+              />
+              <Route path={routes.moviesPage} component={MoviesPage} />
             </Switch>
           </Router>
         </div>

@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { NavLink } from 'react-router-dom'
+import homePageApi from '../../services/homePageApi'
 
 class HomePage extends Component {
   state = {
@@ -7,12 +8,7 @@ class HomePage extends Component {
   }
 
   async componentDidMount() {
-    const api_key = '745843703988462346ba909afe11c7ba'
-
-    const trendingResponce = await fetch(
-      `https://api.themoviedb.org/3/trending/movie/week?api_key=${api_key}`
-    ).then((responce) => responce.json())
-    this.setState({ trending: trendingResponce.results })
+    homePageApi().then((res) => this.setState({ trending: res.results }))
   }
 
   render() {
@@ -24,7 +20,12 @@ class HomePage extends Component {
             const { id, original_title, backdrop_path } = movie
             return (
               <li className="trendingListItem" key={id}>
-                <NavLink to={`${this.props.match.url}movies/${id}`}>
+                <NavLink
+                  to={{
+                    pathname: `${this.props.match.url}movies/${id}`,
+                    state: { from: this.props.match.url },
+                  }}
+                >
                   <h2>{original_title}</h2>
                   <img
                     src={`https://image.tmdb.org/t/p/w300${backdrop_path}`}

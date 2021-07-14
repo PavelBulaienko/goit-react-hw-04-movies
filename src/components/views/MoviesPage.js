@@ -28,7 +28,12 @@ class MoviesPage extends Component {
             <ul>
               {this.state.movies.map(({ id, original_title }) => (
                 <li key={id}>
-                  <NavLink to={`${this.props.match.url}/${id}`}>
+                  <NavLink
+                    to={{
+                      pathname: `${this.props.match.url}/${id}`,
+                      state: { from: this.props.match.url },
+                    }}
+                  >
                     {original_title}
                   </NavLink>
                 </li>

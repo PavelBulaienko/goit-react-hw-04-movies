@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { Route, NavLink } from 'react-router-dom'
+import moviesDetailPageAPI from '../../services/moviesDetailPageAPI'
 
 class MovieDetailsPage extends Component {
   state = {
@@ -14,23 +15,19 @@ class MovieDetailsPage extends Component {
   }
 
   async componentDidMount() {
-    const api_key = '745843703988462346ba909afe11c7ba'
     const { movieId } = this.props.match.params
 
-    const responce = await fetch(
-      `https:api.themoviedb.org/3/movie/${movieId}&?api_key=${api_key}`
-    ).then((responce) => responce.json())
-    this.setState({ ...responce })
+    moviesDetailPageAPI
+      .fullInfoMovie(movieId)
+      .then((responce) => this.setState({ ...responce }))
 
-    const castResponce = await fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${api_key}`
-    ).then((responce) => responce.json())
-    this.setState({ cast: castResponce.cast })
+    moviesDetailPageAPI
+      .castInfoMovie(movieId)
+      .then((responce) => this.setState({ cast: responce.cast }))
 
-    const reviewsResponce = await fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${api_key}`
-    ).then((responce) => responce.json())
-    this.setState({ reviews: reviewsResponce })
+    moviesDetailPageAPI
+      .reviewsInfoMovie(movieId)
+      .then((responce) => this.setState({ reviews: responce }))
   }
 
   render() {
@@ -42,9 +39,17 @@ class MovieDetailsPage extends Component {
       overview,
       genres,
     } = this.state
+    const { location, history } = this.props
 
     return (
       <>
+        <button
+          className="btnComeBack"
+          type="button"
+          onClick={() => history.push(location.state.from)}
+        >
+          Вернуться назад
+        </button>
         <h1>Детальная информация о фильме</h1>
         <img
           src={`https://image.tmdb.org/t/p/w500${backdrop_path}`}
@@ -57,8 +62,8 @@ class MovieDetailsPage extends Component {
         <h2>Overview</h2>
         <p>{overview}</p>
         <h2>Genres</h2>
-        {genres.map((genre) => (
-          <p key={genre.id}>{genre.name}</p>
+        {genres.map(({ id, name }) => (
+          <p key={id}>{name}</p>
         ))}
         <h2>Additional information</h2>
 

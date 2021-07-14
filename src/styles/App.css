@@ -1,18 +1,25 @@
 .mainWrapper {
   padding: 0;
+  padding-top: 100px;
   margin: 0 auto;
   max-width: 1440px;
 }
 
 .navList {
+  margin: 0;
+  width: 100%;
+  max-width: 1440px;
+  position: fixed;
+  top: 0;
   display: flex;
   list-style: none;
-  padding-bottom: 20px;
+  padding: 20px 0;
   border-bottom: 2px solid rgb(161, 161, 161);
+  background-color: #fff;
 }
 .navLink {
   text-decoration: none;
-  color: blueviolet;
+  color: rgb(0, 61, 228);
   font-size: 24px;
 }
 .navListItem:not(:last-child) {
@@ -29,4 +36,13 @@
 .trendingListItem {
   max-width: 300px;
   margin-right: 20px;
+}
+.btnComeBack {
+  background-color: rgb(105, 105, 224);
+  font-size: 20px;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  padding: 10px;
+  cursor: pointer;
 }
